@@ -4,14 +4,17 @@ import { BootstrapCard } from '../parts/bootstrapCard';
 
 function AllData() {
   const ctx = useContext(myContext);
-  const [currentUser, setCurrentUser] = useState(ctx.currentActive);
+  const [currentActiveAccount, setCurrentActiveAccount] = useState(ctx.currentActiveFocus);
+
+  // eslint-disable-next-line
+  const [currentUser, setCurrentUser] = useState(ctx.currentActiveFocus);
 
   function DisplayAccountActivivty() {
     let htmlNode = []
-    for (let x in ctx.users[currentUser].transactions) {
-      let action = ctx.users[currentUser].transactions[x];
-      if (action.deposit) { htmlNode.push(<li>Deposit&nbsp;&nbsp;&nbsp;: ${action.deposit}</li>) }
-      if (action.withdraw) { htmlNode.push(<li>Withdraw: ${action.withdraw}</li>) }
+    for (let x in ctx.currentUser.bankAccounts[currentActiveAccount].transactions) {
+      let action = ctx.currentUser.bankAccounts[currentActiveAccount].transactions[x];
+      if (action.deposit) { htmlNode.push(<li key={x}>Deposit&nbsp;&nbsp;&nbsp;: ${action.deposit}</li>) }
+      if (action.withdraw) { htmlNode.push(<li key={x}>Withdraw: ${action.withdraw}</li>) }
     }
 
     return (
@@ -21,17 +24,22 @@ function AllData() {
     )
   }
 
+
   return (
-    <BootstrapCard
-      header={"Account Activity for - " + ctx.users[currentUser].name}
-      show={true}
-      callBack={setCurrentUser}
-      body={
-        <>
-          <DisplayAccountActivivty />
-        </>
-      }
-    />
+    <>
+
+      <BootstrapCard
+        header={"Account Activity for - " + ctx.currentUser.bankAccounts[currentUser].name}
+        show={true}
+        callBack={setCurrentActiveAccount}
+        body={
+          <>
+            <DisplayAccountActivivty />
+          </>
+        }
+      />
+
+    </>
 
   );
 }

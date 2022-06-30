@@ -1,19 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
-import myContext from '../context/myContext'
+import {createNewUser} from '../api/createNewUser';
 
-function CreateAccount() {
-
+function RegisterNewUser() {
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonDisabled, setbuttonDisabled] = useState(true);
-
-  const ctx = useContext(myContext);
-  // eslint-disable-next-line
-  const [currentUser, setCurrentUser] = useState(ctx.currentActive);
 
   function validate(field, label) {
     if (!field) {
@@ -33,23 +28,21 @@ function CreateAccount() {
       if (!validate(name, 'name')) return;
       if (!validate(email, 'email')) return;
       if (!validate(password, 'password')) return;
-      ctx.users.unshift({ name, email, password, transactions: [] });
+
+      // use API to register a new user
+      createNewUser({name: name, email: email, password: password});
+
       setShow(false);
-      setStatus("Your Account named '" + name + "' Was Created Successfully");
+      setStatus( name + "; Welcome to Bad Bank");
     }
   }
 
-  function clearForm() {
-    setName('');
-    setEmail('');
-    setPassword('');
-    setShow(true);
-    setStatus('');
+  function redirectToLogIn() {
+    console.log('redirect');
+    //document.location = '/';
   }
 
   function checkForBlankForm(e) {
-    setCurrentUser(ctx.users.length)
-
     if (show) {
       let name = document.getElementById('name').value;
       let email = document.getElementById('email').value;
@@ -61,17 +54,18 @@ function CreateAccount() {
   return (
     <form id="createAccountForm" onChange={e => checkForBlankForm(e)}>
       <BootstrapCard
-        header="Create Account"
+        header="Register as a New User"
 
-        buttonText="Create Account"
+        buttonText="Register"
         callback={handleCreate}
         buttonDisabled={buttonDisabled}
 
-        buttonResetText="Add Another Account"
-        callbackReset={clearForm}
+        buttonResetText="Log In with New Credentials"
+        callbackReset={redirectToLogIn}
 
         status={status}
         show={show}
+        supressAccountSelector={true}
 
         body={
           <>
@@ -116,4 +110,4 @@ function CreateAccount() {
   )
 }
 
-export default CreateAccount;
+export default RegisterNewUser;

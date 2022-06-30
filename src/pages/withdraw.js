@@ -27,10 +27,10 @@ function Withdraw() {
       setShow(false);
 
       // OverDraft Check
-      if (parseInt(ctx.users[ctx.currentActive].balance) < amount) {
+      if (parseInt(ctx.currentUser.bankAccounts[ctx.currentActiveFocus].calculatedBalance) < amount) {
         setStatus(<><p>'Withdraw Error: this amount will cause an overdraft'</p></>);
       } else {
-        ctx.users[parseInt(ctx.currentActive)].transactions.push({ withdraw: parseInt(amount) });
+        ctx.currentUser.bankAccounts[parseInt(ctx.currentActiveFocus)].transactions.push({ withdraw: parseInt(amount) });
         setStatus(<><p>'Withdraw was Successfull'</p></>);
       }
     }

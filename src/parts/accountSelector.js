@@ -6,17 +6,17 @@ function AccountSelector(props) {
   const ctx = useContext(myContext);
   const [activeUser, setActiveUser] = useState(0);
   if (ctx){
-    ctx.currentActive = activeUser;
+    ctx.currentActiveFocus = activeUser;
   }
 
-  function listAllUsers() {
+  function listAllAccounts() {
     return (
       <>
         <select
           value={activeUser}
           onChange={e => {setActiveUser(Number(e.target.value)); props.callBack(Number(e.target.value)) }}
         >
-          {ctx.users.map((user,key) => (
+          {ctx.currentUser.bankAccounts.map((user,key) => (
             <option key={key} value={key}>
               {user.name} - ${calculateBalanceForUser(key)}
             </option>
@@ -28,7 +28,7 @@ function AccountSelector(props) {
 
   return (
     <>
-      {ctx?<p>Account: {listAllUsers()}</p>:null}
+      {ctx?<p>Account: {listAllAccounts()}</p>:null}
     </>
   );
 }

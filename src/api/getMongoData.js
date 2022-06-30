@@ -2,7 +2,7 @@ import axios from "axios"
 export async function handler(event, context) {
     console.log('trying to get data')
   try {
-    const response = await axios.get("https://badbankexpress.herokuapp.com/listallusers", { headers: { Accept: "application/json" } })
+    const response = await axios.get("https://badbankexpress.herokuapp.com/listAllAccounts", { headers: { Accept: "application/json" } })
     const data = response.data
     return {
       statusCode: 200,

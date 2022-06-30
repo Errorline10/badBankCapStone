@@ -1,6 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import myContext from '../context/myContext'
-import { BootstrapCard } from '../parts/bootstrapCard';
+import React, { useState, useEffect } from 'react';
 import { handler } from '../api/getMongoData'
 
 function GetMongo() {

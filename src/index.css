@@ -50,3 +50,16 @@ text-decoration: underline;
   border-radius: 10px;
   box-shadow: 2px 2px 5px 4px rgb(85, 92, 84);
 }
+
+.nav-right{
+  float: right;
+  text-align: right;
+  width: 100%;
+}
+.nav-right.navbar-nav{
+  display: block;
+}
+.nav-right .nav-link{
+  display: inline;
+
+}

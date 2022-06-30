@@ -25,7 +25,7 @@ function Deposit() {
 
   function handleCreate() {
     if (!validate(amount, 'amount')) return;
-    ctx.users[parseInt(ctx.currentActive)].transactions.push({ deposit: parseInt(amount) });
+    ctx.currentUser.bankAccounts[parseInt(ctx.currentActiveFocus)].transactions.push({ deposit: parseInt(amount) });
     setShow(false);
     setStatus(<p>'Deposit was Successfull'</p>);
   }
@@ -43,29 +43,33 @@ function Deposit() {
     }
   }
 
+
   return (
-    <form onChange={e => checkForBlankForm(e)}>
-      <BootstrapCard
-        header="Deposit"
+    <>
+        <form onChange={e => checkForBlankForm(e)}>
+          <BootstrapCard
+            header="Deposit"
 
-        buttonText="Deposit This Amount"
-        callback={handleCreate}
-        buttonDisabled={buttonDisabled}
+            buttonText="Deposit This Amount"
+            callback={handleCreate}
+            buttonDisabled={buttonDisabled}
 
-        buttonResetText="Make Another Deposite"
-        callbackReset={clearForm}
+            buttonResetText="Make Another Deposite"
+            callbackReset={clearForm}
 
-        status={status}
-        show={show}
+            status={status}
+            show={show}
 
-        body={(
-          <>
-            Amount to Deposit<br />
-            <input required type="input" className="form-control" id="amount" placeholder="Enter Amount to deposite" value={amount} onChange={e => setAmount(e.currentTarget.value)} /><br />
-          </>
-        )}
-      />
-    </form>
+            body={(
+              <>
+                Amount to Deposit<br />
+                <input required type="input" className="form-control" id="amount" placeholder="Enter Amount to deposite" value={amount} onChange={e => setAmount(e.currentTarget.value)} /><br />
+              </>
+            )}
+          />
+        </form>
+      
+    </>
   )
 }
 
