@@ -1,6 +1,7 @@
 import { BootstrapCard } from '../parts/bootstrapCard';
 
 function Home() {
+
   return (
     <BootstrapCard
       show={true}

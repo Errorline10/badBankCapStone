@@ -1,16 +1,21 @@
 import { useContext } from 'react';
-import myContext from '../../context/myContext'
+import Context from '../../context/myContext'
 
 export default function CalculateBalanceForUser(accountId) {
-  const ctx = useContext(myContext);
+  const { state, setState } = useContext(Context);
+
   let currentBalance = 0;
 
-  for (let x in ctx.currentUser.bankAccounts[accountId].transactions) {
-    let action = ctx.currentUser.bankAccounts[accountId].transactions[x];
+  for (let x in state.currentUser.bankAccounts[accountId].transactions) {
+    let action = state.currentUser.bankAccounts[accountId].transactions[x];
     if (action.deposit) { currentBalance = currentBalance + action.deposit; }
     if (action.withdraw) { currentBalance = currentBalance - action.withdraw; }
   }
 
-  ctx.currentUser.bankAccounts[accountId].calculatedBalance = currentBalance;
+  let newState = state;
+  newState.currentUser.bankAccounts[accountId].calculatedBalance = currentBalance;
+  setState(newState);
+
+  //state.currentUser.bankAccounts[accountId].calculatedBalance = currentBalance;
   return currentBalance
 }

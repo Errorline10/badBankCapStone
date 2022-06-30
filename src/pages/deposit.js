@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
-import myContext from '../context/myContext'
+import Context from '../context/myContext'
 
 function Deposit() {
+  const { state, setState } = useContext(Context);
+
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
   const [amount, setAmount] = useState(0);
   const [buttonDisabled, setbuttonDisabled] = useState(true);
-  const ctx = useContext(myContext);
 
   function validate(field, label) {
     if (!field) {
@@ -25,7 +26,12 @@ function Deposit() {
 
   function handleCreate() {
     if (!validate(amount, 'amount')) return;
-    ctx.currentUser.bankAccounts[parseInt(ctx.currentActiveFocus)].transactions.push({ deposit: parseInt(amount) });
+
+    // update the context (new transaction for the currentActive account)
+    let newstate = state;
+    newstate.currentUser.bankAccounts[parseInt(state.currentActiveFocus)].transactions.push({ deposit: parseInt(amount) })
+    setState(newstate);
+
     setShow(false);
     setStatus(<p>'Deposit was Successfull'</p>);
   }
@@ -46,29 +52,29 @@ function Deposit() {
 
   return (
     <>
-        <form onChange={e => checkForBlankForm(e)}>
-          <BootstrapCard
-            header="Deposit"
+      <form onChange={e => checkForBlankForm(e)}>
+        <BootstrapCard
+          header="Deposit"
 
-            buttonText="Deposit This Amount"
-            callback={handleCreate}
-            buttonDisabled={buttonDisabled}
+          buttonText="Deposit This Amount"
+          callback={handleCreate}
+          buttonDisabled={buttonDisabled}
 
-            buttonResetText="Make Another Deposite"
-            callbackReset={clearForm}
+          buttonResetText="Make Another Deposite"
+          callbackReset={clearForm}
 
-            status={status}
-            show={show}
+          status={status}
+          show={show}
 
-            body={(
-              <>
-                Amount to Deposit<br />
-                <input required type="input" className="form-control" id="amount" placeholder="Enter Amount to deposite" value={amount} onChange={e => setAmount(e.currentTarget.value)} /><br />
-              </>
-            )}
-          />
-        </form>
-      
+          body={(
+            <>
+              Amount to Deposit<br />
+              <input required type="input" className="form-control" id="amount" placeholder="Enter Amount to deposite" value={amount} onChange={e => setAmount(e.currentTarget.value)} /><br />
+            </>
+          )}
+        />
+      </form>
+
     </>
   )
 }

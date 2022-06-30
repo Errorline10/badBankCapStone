@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
+import Context from '../context/myContext'
 
-function LogIn(props) {
+function LogIn() {
+  const { state, setState } = useContext(Context);
 
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
@@ -24,14 +26,31 @@ function LogIn(props) {
 
   function handleLogIn() {
     if (show) {
+      console.log('logging in...')
+
+      // validate the form
       if (!validate(email, 'email')) return;
       if (!validate(password, 'password')) return;
 
-      if (props.callBack) {
-        console.log('AUTO: attempting login callback')
-        // use API to get a token
-        props.callBack({ name: 'mike', email: 'mboston30@gmail.com', password: 'password', token: '12345' });
-      }
+      console.log('its valid...')
+
+
+      // use API to get a token
+      // todo...
+
+      // use returned api values from API to log in 
+      // todo...
+      setState(
+        {
+          ...state,
+          currentUser: {
+            ...state.currentUser,
+            name: 'NameSuppliedFromAPI',
+            email: email,
+            password: password,
+            token: 'loardOfTheRings',
+          }
+        });
 
       setShow(false);
       setStatus("You have successfully Logged in");

@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
-import myContext from '../context/myContext'
+import Context from '../context/myContext'
 
 function Withdraw() {
+  const { state, setState } = useContext(Context);
+
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
   const [amount, setAmount] = useState(0);
   const [buttonDisabled, setbuttonDisabled] = useState(true);
-  const ctx = useContext(myContext);
 
   function validate(field, label) {
     if (!field) { // empty field check
@@ -27,10 +28,16 @@ function Withdraw() {
       setShow(false);
 
       // OverDraft Check
-      if (parseInt(ctx.currentUser.bankAccounts[ctx.currentActiveFocus].calculatedBalance) < amount) {
+      if (parseInt(state.currentUser.bankAccounts[state.currentActiveFocus].calculatedBalance) < amount) {
         setStatus(<><p>'Withdraw Error: this amount will cause an overdraft'</p></>);
       } else {
-        ctx.currentUser.bankAccounts[parseInt(ctx.currentActiveFocus)].transactions.push({ withdraw: parseInt(amount) });
+
+        // todo: use the API to Update the DB
+        // update the context (new transaction for the currentActive account)
+        let newstate = state;
+        newstate.currentUser.bankAccounts[parseInt(state.currentActiveFocus)].transactions.push({ withdraw: parseInt(amount) })
+        setState(newstate);
+
         setStatus(<><p>'Withdraw was Successfull'</p></>);
       }
     }

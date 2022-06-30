@@ -1,7 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import Context , {blankData} from '../context/myContext'
 
-export function NavBar(props) {
+export function NavBar() {
+  const {state, setState } = useContext(Context);
+
+function logOut(){
+  setState(blankData);
+}
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -11,7 +18,7 @@ export function NavBar(props) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 
-          {!props.currentUser?.token ?
+          {!state.currentUser?.token ?
             <Nav className="nav-right">
               <Nav.Link href="#/registerNewUser/" title="[Register as a New User]">[New User Register]</Nav.Link>
               - or -
@@ -26,7 +33,7 @@ export function NavBar(props) {
               <Nav.Link href="#/deposit/" title="Make a deposit">Make a Deposit</Nav.Link>
               <Nav.Link href="#/withdraw/" title="Make a Withdraw">Make a Withdraw</Nav.Link>
               <Nav.Link href="#/alldata/" title="See All Data">See All Data</Nav.Link>
-              {/* <Nav.Link href="#/logOut/" title="Log Out">[Log Out]</Nav.Link> */}
+              <div onClick={()=>logOut()}>[Log Out]</div>
             </Nav>
           }
 

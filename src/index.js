@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import ReactDOM from 'react-dom/client';
-import myContext from './context/myContext'
 import NavBar from './parts/navbar';
 import {
   HashRouter,
@@ -19,50 +18,37 @@ import RegisterNewUser from './pages/registerNewUser'
 import LogIn from './pages/logIn'
 
 
-import { MyProvider } from './context/myContext'
 
 import './bootstrap.min.css';
 import './index.css';
 
-const rawData = {
-  currentActiveFocus: 0,
-  currentUser: {
-    name: '',
-    email: '',
-    password: '',
-    token: '',
-    bankAccounts: [{ name: 'BankVault', transactions: [{ deposit: 100 }] }]
-  }
-}
+import Context, {blankData} from './context/myContext'
 
-
-function App() {
-  const ctx = useContext(myContext);
-  const [currentUser, setCurrentUser] = useState(rawData);
-
-  function userHasLoggedIn(userData) {
-    if (userData) {
-      console.log('userhasLoggedIn');
-      setCurrentUser(userData);
-      if (ctx){ctx.currentUser = userData};
-    }
-  }
-
-
+export default function AppWrapper() {
+  const [state, setState] = useState(blankData);
 
   return (
-    <HashRouter>
-      [ currentUser = {JSON.stringify(currentUser)}]
-      <NavBar currentUser={currentUser} />
-      <MyProvider value={rawData}>
+    <Context.Provider value={{ state, setState }}> {/* passing state to in provider */}
+      <App />
+    </Context.Provider>
+  );
+}
+
+function App() {
+  // getting the state from Context
+  const { state, setState } = useContext(Context);
+  return (
+    <>
+      <HashRouter>
+        <NavBar />
         <div className="container" style={{ padding: "20px" }}>
           <>
-            {!currentUser?.token ?
+            {!state.currentUser?.token ?
               <>
                 <Routes>
                   <Route path="/" exact element={<Home />} />
                   <Route path="/registerNewUser/" element={<RegisterNewUser />} />
-                  <Route path="/logIn/" element={<LogIn callBack={userHasLoggedIn} />} />
+                  <Route path="/logIn/" element={<LogIn />} />
                 </Routes>
               </>
               :
@@ -73,20 +59,25 @@ function App() {
                 <Route path="/withdraw/" element={<Withdraw />} />
                 <Route path="/alldata/" element={<AllData />} />
                 <Route path="/getmongo/" element={<GetMongo />} />
-                <Route path="/registerNewUser/" element={<RegisterNewUser />} />
+                <Route path="/registerNewUser/" element={<Home />} />
                 <Route path="/logIn/" element={<Home />} />
               </Routes>
 
             }</>
         </div>
-      </MyProvider>
-    </HashRouter>
+      </HashRouter>
+
+    </>
   );
 }
 
 
+
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <App />
+  <AppWrapper />
 );
 

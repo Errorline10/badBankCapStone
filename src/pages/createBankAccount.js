@@ -1,20 +1,20 @@
 import React, { useContext, useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
-import myContext from '../context/myContext'
+import Context from '../context/myContext'
 
 function CreateBankAccount() {
+  const { state, setState } = useContext(Context);
 
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [buttonDisabled, setbuttonDisabled] = useState(true);
+  const [buttonDisabled, setbuttonDisabled] = useState(false);
 
-  const ctx = useContext(myContext);
   // eslint-disable-next-line
-  const [currentActiveAccount, setCurrentActiveAccount] = useState(ctx.currentActiveFocus);
-  
+  const [currentActiveAccount, setCurrentActiveAccount] = useState(state.currentActiveFocus);
+
   function validate(field, label) {
     if (!field) {
       setStatus('Error: ' + label + ' is a required field.');
@@ -31,9 +31,13 @@ function CreateBankAccount() {
   function handleCreate() {
     if (show) {
       if (!validate(name, 'name')) return;
-      if (!validate(email, 'email')) return;
-      if (!validate(password, 'password')) return;
-      ctx.currentUser.bankAccounts.unshift({ name, email, password, transactions: [] });
+
+      let newState = state;
+      newState.currentUser.bankAccounts.push({ name: name, email: state.currentUser.email, password: password, transactions: [] });
+      setState(newState);
+      setState({ ...state, currentActiveFocus: state.currentUser.bankAccounts.length - 1 });
+
+
       setShow(false);
       setStatus("Your Account named '" + name + "' Was Created Successfully");
     }
@@ -41,79 +45,53 @@ function CreateBankAccount() {
 
   function clearForm() {
     setName('');
-    setEmail('');
-    setPassword('');
     setShow(true);
     setStatus('');
   }
 
   function checkForBlankForm(e) {
-    setCurrentActiveAccount(ctx.currentUser.bankAccounts.length)
-
     if (show) {
+
       let name = document.getElementById('name').value;
-      let email = document.getElementById('email').value;
-      let pass = document.getElementById('password').value;
-      setbuttonDisabled(!name && !email && !pass)
+      setbuttonDisabled(!name)
     }
   }
 
   return (
     <>
 
-        <form id="createAccountForm" onChange={e => checkForBlankForm(e)}>
-          <BootstrapCard
-            header="Create Account"
+      <form id="createAccountForm" onChange={e => checkForBlankForm(e)}>
+        <BootstrapCard
+          header="Create Account"
 
-            buttonText="Create Account"
-            callback={handleCreate}
-            buttonDisabled={buttonDisabled}
+          buttonText="Create Account"
+          callback={handleCreate}
+          buttonDisabled={buttonDisabled}
 
-            buttonResetText="Add Another Account"
-            callbackReset={clearForm}
+          buttonResetText="Add Another Account"
+          callbackReset={clearForm}
 
-            status={status}
-            show={show}
+          status={status}
+          show={show}
 
-            body={
-              <>
-                <hr />
-                Name *<br />
-                <input
-                  required
-                  type="input"
-                  className="form-control"
-                  id="name"
-                  placeholder="Enter name"
-                  value={name}
-                  onChange={e => setName(e.currentTarget.value)} />
-                <br />
+          body={
+            <>
+              <hr />
+              Name *<br />
+              <input
+                required
+                type="input"
+                className="form-control"
+                id="name"
+                placeholder="Enter name"
+                value={name}
+                onChange={e => setName(e.currentTarget.value)} />
+              <br />
 
-                Email Address *<br />
-                <input
-                  required
-                  type="input"
-                  className="form-control"
-                  id="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={e => setEmail(e.currentTarget.value)} />
-                <br />
-
-                Password *<br />
-                <input
-                  required
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={e => setPassword(e.currentTarget.value)} />
-                <br />
-              </>
-            }
-          />
-        </form>
+            </>
+          }
+        />
+      </form>
 
     </>
   )
