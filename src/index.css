@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  background-color: rgb(120, 135, 120);
+
+  font-family: "Bank Gothic"; src: url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.eot"); src: url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.woff") format("woff"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.svg#Bank Gothic") format("svg");
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.iconImage {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+  border: 1px solid black;
+  border-radius: 50%;
+  transform: scaleX(-1);
+  width: 70%;
+}
+.iconImage.small{
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+}
+
+
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {  
+text-decoration: underline;
+}
+
+.bg-light {
+  background-color: #d4d8ad!important;
+}
+
+.card-header{
+  font-family: "Bank Gothic"; src: url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.eot"); src: url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.woff") format("woff"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/cd0161509171ec0b9558c548d8e9c26d.svg#Bank Gothic") format("svg");
+  font-size: 1.5rem;
+}
+.card{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+
+  border: 2px solid #ced0de;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 4px rgb(85, 92, 84);
+}

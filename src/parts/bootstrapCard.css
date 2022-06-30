@@ -1,0 +1,15 @@
+.statusMsg{
+    margin: 40px 0px 40px 0px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+}
+
+.card-body{
+    text-align: left;
+}
+
+.btn{
+    width: 100%;
+}
