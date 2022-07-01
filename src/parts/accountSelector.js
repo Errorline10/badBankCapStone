@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
-import myContext from '../context/myContext'
+import React, { useContext } from 'react';
 import calculateBalanceForUser from './functions/calculateBalance'
 import Context from '../context/myContext'
 
-function AccountSelector(props) {
+function AccountSelector() {
   const { state, setState } = useContext(Context);
 
   function setActiveUser(n) {
