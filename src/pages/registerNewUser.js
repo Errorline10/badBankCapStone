@@ -40,11 +40,6 @@ function RegisterNewUser() {
     }
   }
 
-  function redirectToLogIn() {
-    console.log('redirect');
-    //document.location = '/';
-  }
-
   function checkForBlankForm(e) {
     if (show) {
       let name = document.getElementById('name').value;
