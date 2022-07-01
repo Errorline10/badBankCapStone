@@ -36,7 +36,7 @@ function RegisterNewUser() {
       //setState({ ...state, currentUser: { ...state.currentUser, name: name, email: email, password: password, token: 'Dumbldor' } });
 
       setShow(false);
-      setStatus(name + "; Welcome to Bad Bank");
+      setStatus(<><p>Welcome {name};</p><p>Your user Account has been created successfully, <br/><br/>Please use the [Log In] button in the menu to log in.</p></>);
     }
   }
 
@@ -62,9 +62,6 @@ function RegisterNewUser() {
         buttonText="Register"
         callback={handleCreate}
         buttonDisabled={buttonDisabled}
-
-        buttonResetText="Log In with New Credentials"
-        callbackReset={redirectToLogIn}
 
         status={status}
         show={show}

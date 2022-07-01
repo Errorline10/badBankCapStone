@@ -39,27 +39,33 @@ function LogIn() {
       // use API to get a token
       let returnedUserData = {};
       login({ email: email, password: password }).then((data) => {
+
         if (data.statusCode === 200) {
           returnedUserData = JSON.parse(data.body).msg[0];
-          console.log('log in succsess', returnedUserData);
 
-          // use returned api values from API to log in 
-          returnedUserData.token = 'loardOfTheRings'; // todo... tokens
+          if (returnedUserData === undefined) {
+            setStatus("Invalid username or password");
+          } else {
 
-          let newState = {
-            currentActiveFocus: 0,
-            currentUser: returnedUserData
+            console.log('log in succsess', returnedUserData);
+
+            // use returned api values from API to log in 
+            returnedUserData.token = 'loardOfTheRings'; // todo... tokens
+            let newState = {
+              currentActiveFocus: 0,
+              currentUser: returnedUserData
+            }
+
+            setState(newState);
+
+            setShow(false);
+            setStatus("You have successfully Logged in");
           }
-
-          setState(newState);
-
-          setShow(false);
-          setStatus("You have successfully Logged in");
-
-
-        } else {
-          console.log('server Error!')
         }
+        else { console.log('server Error!') }
+
+
+
       })
 
 
