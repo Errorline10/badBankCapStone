@@ -2,7 +2,7 @@ import axios from "axios"
 export async function createNewUser(userData) {
     console.log('Creating new User', userData);
   try {
-    const response = await axios.post("https://badbankexpress.herokuapp.com/createUser/"+userData.name+"/"+userData.email+"/"+userData.password, { headers: { Accept: "application/json" } })
+    const response = await axios.get("https://badbankexpress.herokuapp.com/createUser/"+userData.name+"/"+userData.email+"/"+userData.password, { headers: { Accept: "application/json" } })
     //const response = await axios.get("http://localhost:3000/createUser/"+userData.name+"/"+userData.email+"/"+userData.password, { headers: { Accept: "application/json" } })
     const data = response.data
     console.log(data)

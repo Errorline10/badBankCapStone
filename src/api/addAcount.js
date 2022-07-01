@@ -1,7 +1,7 @@
 import axios from "axios"
 export async function addAcount(account, userData) {
   try {
-    const response = await axios.post("https://badbankexpress.herokuapp.com/addaccount/"+userData.email+"/"+userData.password+"/"+account, { headers: { Accept: "application/json" } })
+    const response = await axios.get("https://badbankexpress.herokuapp.com/addaccount/"+userData.email+"/"+userData.password+"/"+account, { headers: { Accept: "application/json" } })
     //const response = await axios.get("http://localhost:3000/addaccount/"+userData.email+"/"+userData.password+"/"+account, { headers: { Accept: "application/json" } })
     const data = response.data
     return {
