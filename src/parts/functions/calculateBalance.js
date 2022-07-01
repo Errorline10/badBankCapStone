@@ -8,8 +8,8 @@ export default function CalculateBalanceForUser(accountId) {
 
   for (let x in state.currentUser.bankAccounts[accountId].transactions) {
     let action = state.currentUser.bankAccounts[accountId].transactions[x];
-    if (action.deposit) { currentBalance = currentBalance + action.deposit; }
-    if (action.withdraw) { currentBalance = currentBalance - action.withdraw; }
+    if (action.deposit) { currentBalance = currentBalance + parseInt(action.deposit); }
+    if (action.withdraw) { currentBalance = currentBalance - parseInt(action.withdraw); }
   }
 
   let newState = state;

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
 import Context from '../context/myContext'
+import { transaction } from '../api/transaction'
 
 function Deposit() {
   const { state, setState } = useContext(Context);
@@ -30,7 +31,10 @@ function Deposit() {
     // update the context (new transaction for the currentActive account)
     let newstate = state;
     newstate.currentUser.bankAccounts[parseInt(state.currentActiveFocus)].transactions.push({ deposit: parseInt(amount) })
+    let accName = newstate.currentUser.bankAccounts[parseInt(state.currentActiveFocus)].name;
+    transaction('deposit', accName, amount, state.currentUser)
     setState(newstate);
+
 
     setShow(false);
     setStatus(<p>'Deposit was Successfull'</p>);
@@ -52,28 +56,40 @@ function Deposit() {
 
   return (
     <>
-      <form onChange={e => checkForBlankForm(e)}>
+      {state.currentUser.bankAccounts.length === 0 ?
+
         <BootstrapCard
-          header="Deposit"
-
-          buttonText="Deposit This Amount"
-          callback={handleCreate}
-          buttonDisabled={buttonDisabled}
-
-          buttonResetText="Make Another Deposite"
-          callbackReset={clearForm}
-
-          status={status}
-          show={show}
-
-          body={(
-            <>
-              Amount to Deposit<br />
-              <input required type="input" className="form-control" id="amount" placeholder="Enter Amount to deposite" value={amount} onChange={e => setAmount(e.currentTarget.value)} /><br />
-            </>
-          )}
+          header={"No Accounts Found"}
+          show={true}
+          body={<p>Please Create at least one account to use this page.</p>}
         />
-      </form>
+
+        :
+
+        <form onChange={e => checkForBlankForm(e)}>
+          <BootstrapCard
+            header="Deposit"
+
+            buttonText="Deposit This Amount"
+            callback={handleCreate}
+            buttonDisabled={buttonDisabled}
+
+            buttonResetText="Make Another Deposite"
+            callbackReset={clearForm}
+
+            status={status}
+            show={show}
+
+            body={(
+              <>
+                Amount to Deposit<br />
+                <input required type="input" className="form-control" id="amount" placeholder="Enter Amount to deposite" value={amount} onChange={e => setAmount(e.currentTarget.value)} /><br />
+              </>
+            )}
+          />
+        </form>
+
+      }
 
     </>
   )

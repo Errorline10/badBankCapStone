@@ -13,7 +13,6 @@ import CreateBankAccount from './pages/createBankAccount'
 import Deposit from './pages/deposit'
 import Withdraw from './pages/withdraw'
 import AllData from './pages/alldata'
-import GetMongo from './pages/getMongo'
 import RegisterNewUser from './pages/registerNewUser'
 import LogIn from './pages/logIn'
 
@@ -36,9 +35,11 @@ export default function AppWrapper() {
 
 function App() {
   // getting the state from Context
+  // eslint-disable-next-line
   const { state, setState } = useContext(Context);
   return (
     <>
+    {/* <pre>{JSON.stringify(state)}</pre> */}
       <HashRouter>
         <NavBar />
         <div className="container" style={{ padding: "20px" }}>
@@ -49,6 +50,7 @@ function App() {
                   <Route path="/" exact element={<Home />} />
                   <Route path="/registerNewUser/" element={<RegisterNewUser />} />
                   <Route path="/logIn/" element={<LogIn />} />
+                  <Route path="/*" element={<LogIn />} />
                 </Routes>
               </>
               :
@@ -58,7 +60,6 @@ function App() {
                 <Route path="/deposit/" element={<Deposit />} />
                 <Route path="/withdraw/" element={<Withdraw />} />
                 <Route path="/alldata/" element={<AllData />} />
-                <Route path="/getmongo/" element={<GetMongo />} />
                 <Route path="/registerNewUser/" element={<Home />} />
                 <Route path="/logIn/" element={<Home />} />
               </Routes>

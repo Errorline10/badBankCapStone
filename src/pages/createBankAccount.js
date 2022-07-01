@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { BootstrapCard } from '../parts/bootstrapCard';
+import { BootstrapCard } from '../parts/bootstrapCard'
 import Context from '../context/myContext'
+import {addAcount} from '../api/addAcount'
 
 function CreateBankAccount() {
   const { state, setState } = useContext(Context);
@@ -8,7 +9,7 @@ function CreateBankAccount() {
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  // eslint-disable-next-line
   const [password, setPassword] = useState('');
   const [buttonDisabled, setbuttonDisabled] = useState(false);
 
@@ -34,8 +35,13 @@ function CreateBankAccount() {
 
       let newState = state;
       newState.currentUser.bankAccounts.push({ name: name, email: state.currentUser.email, password: password, transactions: [] });
+
+      addAcount(name, state.currentUser)
+
       setState(newState);
       setState({ ...state, currentActiveFocus: state.currentUser.bankAccounts.length - 1 });
+
+
 
 
       setShow(false);

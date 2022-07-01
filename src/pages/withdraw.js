@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
 import Context from '../context/myContext'
+import { transaction } from '../api/transaction'
 
 function Withdraw() {
   const { state, setState } = useContext(Context);
@@ -36,6 +37,8 @@ function Withdraw() {
         // update the context (new transaction for the currentActive account)
         let newstate = state;
         newstate.currentUser.bankAccounts[parseInt(state.currentActiveFocus)].transactions.push({ withdraw: parseInt(amount) })
+        let accName = newstate.currentUser.bankAccounts[parseInt(state.currentActiveFocus)].name;
+        transaction('withdraw', accName, amount, state.currentUser)
         setState(newstate);
 
         setStatus(<><p>'Withdraw was Successfull'</p></>);
@@ -58,37 +61,52 @@ function Withdraw() {
 
 
   return (
-    <form onChange={e => checkForBlankForm(e)}>
-      <BootstrapCard
-        header="Withdraw"
+    <>
+      {state.currentUser.bankAccounts.length === 0 ?
 
-        buttonText="Withdraw This Amount"
-        callback={handleCreate}
-        buttonDisabled={buttonDisabled}
+        <BootstrapCard
+          header={"No Accounts Found"}
+          show={true}
+          body={<p>Please Create at least one account to use this page.</p>}
+        />
 
-        buttonResetText="Make Another Withdraw"
-        callbackReset={clearForm}
+        :
 
-        status={status}
-        show={show}
+        <form onChange={e => checkForBlankForm(e)}>
+          <BootstrapCard
+            header="Withdraw"
 
-        body={(
-          <>
-            Amount to Withdraw<br />
-            <input
-              required
-              type="input"
-              className="form-control"
-              id="amount"
-              placeholder="Enter Amount to Withdraw"
-              value={amount}
-              onChange={e => setAmount(e.currentTarget.value)} />
-            <br />
-          </>
-        )}
-      />
-    </form>
+            buttonText="Withdraw This Amount"
+            callback={handleCreate}
+            buttonDisabled={buttonDisabled}
+
+            buttonResetText="Make Another Withdraw"
+            callbackReset={clearForm}
+
+            status={status}
+            show={show}
+
+            body={(
+              <>
+                Amount to Withdraw<br />
+                <input
+                  required
+                  type="input"
+                  className="form-control"
+                  id="amount"
+                  placeholder="Enter Amount to Withdraw"
+                  value={amount}
+                  onChange={e => setAmount(e.currentTarget.value)} />
+                <br />
+              </>
+            )}
+          />
+        </form>
+
+      } </>
+
   )
+
 }
 
 export default Withdraw;

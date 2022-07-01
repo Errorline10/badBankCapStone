@@ -1,11 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
 import { createNewUser } from '../api/createNewUser';
-import Context from '../context/myContext'
 
 function RegisterNewUser() {
-  const { state, setState } = useContext(Context);
-
   const [show, setShow] = useState(true);
   const [status, setStatus] = useState('');
   const [name, setName] = useState('');
@@ -33,11 +30,11 @@ function RegisterNewUser() {
       if (!validate(password, 'password')) return;
 
       // use API to register a new user
-      //createNewUser({ name: name, email: email, password: password });
+      createNewUser({ name: name, email: email, password: password }); // todo: pass inital account and deposite
 
-    // update the context (initial populate currentUser, w/ token)
-    setState({...state, currentUser: {...state.currentUser, name: name, email: email, password: password, token: 'Dumbldor'} });
-      
+      // update the context (initial populate currentUser, w/ token)
+      //setState({ ...state, currentUser: { ...state.currentUser, name: name, email: email, password: password, token: 'Dumbldor' } });
+
       setShow(false);
       setStatus(name + "; Welcome to Bad Bank");
     }

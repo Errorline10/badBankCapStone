@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { BootstrapCard } from '../parts/bootstrapCard';
+import { login } from '../api/login'
 import Context from '../context/myContext'
 
 function LogIn() {
+  // eslint-disable-next-line
   const { state, setState } = useContext(Context);
 
   const [show, setShow] = useState(true);
@@ -32,28 +34,35 @@ function LogIn() {
       if (!validate(email, 'email')) return;
       if (!validate(password, 'password')) return;
 
-      console.log('its valid...')
 
 
       // use API to get a token
-      // todo...
+      let returnedUserData = {};
+      login({ email: email, password: password }).then((data) => {
+        if (data.statusCode === 200) {
+          returnedUserData = JSON.parse(data.body).msg[0];
+          console.log('log in succsess', returnedUserData);
 
-      // use returned api values from API to log in 
-      // todo...
-      setState(
-        {
-          ...state,
-          currentUser: {
-            ...state.currentUser,
-            name: 'NameSuppliedFromAPI',
-            email: email,
-            password: password,
-            token: 'loardOfTheRings',
+          // use returned api values from API to log in 
+          returnedUserData.token = 'loardOfTheRings'; // todo... tokens
+
+          let newState = {
+            currentActiveFocus: 0,
+            currentUser: returnedUserData
           }
-        });
 
-      setShow(false);
-      setStatus("You have successfully Logged in");
+          setState(newState);
+
+          setShow(false);
+          setStatus("You have successfully Logged in");
+
+
+        } else {
+          console.log('server Error!')
+        }
+      })
+
+
     }
   }
 

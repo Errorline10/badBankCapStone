@@ -29,11 +29,11 @@ function logOut(){
 
             <Nav className="me-auto">
               <Nav.Link href="#/">Home</Nav.Link>
-              <Nav.Link href="#/createBankAccount/" title="Create a New Bank Account">Create New Account</Nav.Link>
-              <Nav.Link href="#/deposit/" title="Make a deposit">Make a Deposit</Nav.Link>
-              <Nav.Link href="#/withdraw/" title="Make a Withdraw">Make a Withdraw</Nav.Link>
-              <Nav.Link href="#/alldata/" title="See All Data">See All Data</Nav.Link>
-              <div onClick={()=>logOut()}>[Log Out]</div>
+              <Nav.Link href="#/createBankAccount/" title="Add an Account">Add an Account</Nav.Link>
+              <Nav.Link href="#/deposit/" title="Deposit">Deposit</Nav.Link>
+              <Nav.Link href="#/withdraw/" title="Withdraw">Withdraw</Nav.Link>
+              <Nav.Link href="#/alldata/" title="All Data">All Data</Nav.Link>
+              <Nav.Link href="#/logIn/" title="Log Out" onClick={()=>logOut()}>[Log Out]</Nav.Link>
             </Nav>
           }
 
